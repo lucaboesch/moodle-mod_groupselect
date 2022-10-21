@@ -544,7 +544,6 @@ if ($CFG->branch < 400) {
         $cmcompletion = \core_completion\cm_completion_details::get_instance($cminfo, $USER->id); // Fetch completion information.
         $activitydates = \core\activity_dates::get_dates_for_module($cminfo, $USER->id);
         echo $OUTPUT->activity_information($cminfo, $cmcompletion, $activitydates);
-    }
     if (trim( strip_tags( $groupselect->intro ) )) {
         echo $OUTPUT->box_start( 'mod_introbox', 'groupselectintro' );
         echo format_module_intro( 'groupselect', $groupselect, $cm->id );
