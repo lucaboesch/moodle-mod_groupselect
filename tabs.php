@@ -24,12 +24,12 @@
  */
     defined('MOODLE_INTERNAL') || die;
 
-    $row = array();
+    $row = [];
     $row[] = new tabobject('view',
-                           new moodle_url('/mod/groupselect/view.php', array('id' => $id)),
+                           new moodle_url('/mod/groupselect/view.php', ['id' => $id]),
                            get_string('view', 'mod_groupselect'));
     $row[] = new tabobject('limits',
-                        new moodle_url('/mod/groupselect/limits.php', array('id' => $id)),
+                        new moodle_url('/mod/groupselect/limits.php', ['id' => $id]),
                         get_string('limits', 'mod_groupselect'));
     echo '<div class="groupdisplay">';
     echo $OUTPUT->tabtree($row, $currenttab);

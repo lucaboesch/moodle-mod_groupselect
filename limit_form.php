@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
  * A form for setting group limits
  *
@@ -87,7 +86,7 @@ class limit_form extends moodleform {
         $keys = array_keys($data);
         $num = $data['num'];
 
-        $minmembers = $DB->get_field('groupselect', 'minmembers', array('id' => $data['instanceid']));
+        $minmembers = $DB->get_field('groupselect', 'minmembers', ['id' => $data['instanceid']]);
 
         for ($i = 0; $i < $num; $i++) {
             if ($data[$keys[$i]] < $minmembers && $data[$keys[$i]] != 0) {

@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
  * Show the limit for each group involved in the activity
  *
@@ -34,9 +33,9 @@ global $DB, $OUTPUT;
 $id = optional_param('id', 0, PARAM_INT);
 
 $cm = get_coursemodule_from_id('groupselect', $id, 0, false, MUST_EXIST);
-$course = $DB->get_record('course', array(
-    'id' => $cm->course
-), '*', MUST_EXIST);
+$course = $DB->get_record('course', [
+    'id' => $cm->course,
+], '*', MUST_EXIST);
 $context = context_course::instance($course->id);
 require_capability('mod/groupselect:overridegrouplimit', $context);
 
@@ -45,9 +44,9 @@ if ($id) {
     $url->param('id', $id);
 }
 $returnurl = $CFG->wwwroot.'/mod/groupselect/view.php?id='.$id;
-$groupselect = $DB->get_record('groupselect', array(
-    'id' => $cm->instance
-), '*', MUST_EXIST);
+$groupselect = $DB->get_record('groupselect', [
+    'id' => $cm->instance,
+], '*', MUST_EXIST);
 
 require_login($course);
 
@@ -57,10 +56,10 @@ $PAGE->set_url($url);
 $PAGE->set_pagelayout('course');
 $PAGE->navbar->add('Limit');
 
-$editoroptions = array(
+$editoroptions = [
     'instanceid' => $cm->instance,
-    'targetgrouping' => $groupselect->targetgrouping
-);
+    'targetgrouping' => $groupselect->targetgrouping,
+];
 
 // Fetch groups for editing form.
 $groups = groups_get_all_groups( $course->id, 0, $groupselect->targetgrouping );
@@ -71,12 +70,12 @@ $count = count($groups);
 // Fetch group limits.
 $dblimit = $DB->get_records(
     'groupselect_groups_limits',
-    array('instance_id' => $cm->instance),
+    ['instance_id' => $cm->instance],
     '',
     'id, grouplimit, groupid'
 );
 
-$limits = array();
+$limits = [];
 foreach ($dblimit as $limit) {
     $limits[$limit->groupid] = $limit->grouplimit;
 }
@@ -110,16 +109,16 @@ if ($editform->is_cancelled()) {
         $limit = $data->$index;
 
         // Fetch the limit.
-        $recordid = $DB->get_field('groupselect_groups_limits', 'id', array('groupid' => $groupid, 'instance_id' => $cm->instance));
+        $recordid = $DB->get_field('groupselect_groups_limits', 'id', ['groupid' => $groupid, 'instance_id' => $cm->instance]);
 
         // Fetch Minimum and Maximum members for the groupselect.
-        $minmax = $DB->get_record('groupselect', array('id' => $cm->instance), 'maxmembers, minmembers');
+        $minmax = $DB->get_record('groupselect', ['id' => $cm->instance], 'maxmembers, minmembers');
 
         // If empty delete records.
         if ($limit === '' && $recordid) {
-            $args = array(
-                'id' => $recordid
-            );
+            $args = [
+                'id' => $recordid,
+            ];
             // Update record.
             $DB->delete_records('groupselect_groups_limits', $args);
         }
