@@ -68,3 +68,23 @@
 .mod_groupselect th {
     white-space: nowrap;
 }
+
+/* Group description inline editor (jeditable). Percentage height/width on the
+   textarea requires the parent to have an explicit height, which the table
+   cell does not provide. Without a minimum height/display the textarea
+   collapses to zero height and the field appears to vanish. */
+.mod_groupselect .editable_textarea {
+    display: block;
+    min-height: 1.5em;
+}
+
+.mod_groupselect .editable_textarea form {
+    display: block;
+}
+
+.mod_groupselect .editable_textarea textarea.custom-control {
+    display: block;
+    min-height: 6em;
+    min-width: 200px;
+    box-sizing: border-box;
+}
