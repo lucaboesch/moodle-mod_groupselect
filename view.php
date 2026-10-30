@@ -540,6 +540,7 @@ if ($export && $canexport) {
 
 // User wants to assign supervisors via supervisionrole.
 if ($assign && $canassign) {
+    require_sesskey();
     $coursecontext = context_course::instance($course->id)->id;
     $teachers = groupselect_get_context_members_by_role($coursecontext, $assignrole);
     shuffle($teachers);
@@ -583,6 +584,7 @@ if ($assign && $canassign) {
         $teachercount--;
     }
 } else if ($unassign && $canunassign) {
+    require_sesskey();
     if ($alreadyassigned) {
         $DB->delete_records('groupselect_groups_teachers', [
                 'instance_id' => $groupselect->id,
