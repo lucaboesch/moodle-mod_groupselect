@@ -331,7 +331,8 @@ if ($select && $canselect && isset($groups[$select]) && $isopen) {
         $problems[] = get_string('cannotunselectclosed', 'mod_groupselect');
     } else if ($confirm && data_submitted() && confirm_sesskey()) {
         groups_remove_member($unselect, $USER->id);
-        if ($groupselect->deleteemptygroups && ! groups_get_members($unselect)) {
+        // Check the database directly; groups_get_members() hides members of MEMBERS/OWN visibility groups.
+        if ($groupselect->deleteemptygroups && !$DB->record_exists('groups_members', ['groupid' => $unselect])) {
             groups_delete_group($unselect);
             $DB->delete_records('groupselect_passwords', [
                     'groupid' => $unselect,
