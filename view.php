@@ -37,7 +37,6 @@ $select = optional_param('select', 0, PARAM_INT);
 $unselect = optional_param('unselect', 0, PARAM_INT);
 $confirm = optional_param('confirm', 0, PARAM_BOOL);
 $create = optional_param('create', 0, PARAM_BOOL);
-$password = optional_param('group_password', 0, PARAM_BOOL);
 $export = optional_param('export', 0, PARAM_BOOL);
 $assign = optional_param('assign', 0, PARAM_BOOL);
 $unassign = optional_param('unassign', 0, PARAM_BOOL);
@@ -280,7 +279,8 @@ if ($select && $canselect && isset($groups[$select]) && $isopen) {
     $data = [
             'id' => $id,
             'select' => $select,
-            'group_password' => $password,
+            // Determined from the database, never from the request.
+            'group_password' => in_array($select, $passwordgroups),
     ];
     $mform = new select_form(null, [
             $data,
